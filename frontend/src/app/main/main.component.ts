@@ -13,6 +13,7 @@ import { RequestService } from '../services/request.service';
 })
 export class MainComponent {
   patients: TablePatient[] = [];
+  loading: boolean = true;
 
   displayedColumns: string[] = ['id', 'name', 'surname', 'birthDate', 'details'];
   dataSource: MatTableDataSource<TablePatient>;
@@ -20,13 +21,13 @@ export class MainComponent {
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
 
-
   constructor(
     private requests: RequestService,
     private router: Router
   ) {
     this.requests.getPatients().then(response => {
       for (let patient of response) {
+        this.loading = false;
         const resource = JSON.parse(patient.resource);
         this.patients.push(new TablePatient(patient.id, resource.name[0].given[0], resource.name[0].family, resource.birthDate));
       }
@@ -38,6 +39,15 @@ export class MainComponent {
     }).catch(error => {
       console.error(error);
     });
+  }
+
+  applyFilter(event: Event) {
+    const filterValue = (event.target as HTMLInputElement).value;
+    this.dataSource.filter = filterValue.trim().toLowerCase();
+
+    if (this.dataSource.paginator) {
+      this.dataSource.paginator.firstPage();
+    }
   }
 
   goToPatient(id: string) {

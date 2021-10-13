@@ -1,0 +1,35 @@
+.button {
+    margin-bottom: 50px;
+}
+
+.content {
+    padding: 2%;
+}
+
+.patient-name {
+    font-size: 45px;
+    font-weight: bold;
+    font-style: italic;
+    margin-right: 50px;
+}
+
+.patient-gender{
+    font-style: italic;
+    color: gray;
+}
+
+.address {
+    margin-top: 50px;
+    font-size: 30px;
+    font-style: italic;
+}
+
+.birth-date {
+    margin-top: 40px;
+    font-size: 30px;
+}
+
+.identifiers {
+    margin-top: 40px;
+    font-size: 25px;
+}

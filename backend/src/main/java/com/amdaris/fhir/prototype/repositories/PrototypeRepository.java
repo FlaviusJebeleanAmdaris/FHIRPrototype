@@ -13,6 +13,6 @@ public interface PrototypeRepository extends CrudRepository<Patient, String> {
 
     Optional<Patient> findById(String id);
 
-    @Query("SELECT * FROM patient LIMIT 20;")
+//    @Query("SELECT * FROM patient LIMIT 20;")
     List<Patient> findAll();
 }

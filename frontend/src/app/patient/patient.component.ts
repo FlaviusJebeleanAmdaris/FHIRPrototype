@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { flushMicrotasks } from '@angular/core/testing';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { RequestService } from '../services/request.service';
 
 @Component({
@@ -11,10 +10,11 @@ import { RequestService } from '../services/request.service';
 export class PatientComponent implements OnInit {
 
   id: string | null = '';
-  patient: any;
+  patientData: any;
 
   constructor(
     private route: ActivatedRoute,
+    private router: Router,
     private request: RequestService
   ) { }
 
@@ -22,11 +22,13 @@ export class PatientComponent implements OnInit {
     this.id = this.route.snapshot.paramMap.get('id');
 
     this.request.getPatient(this.id!).then(response => {
-      this.patient = response;
-      
-      
+      this.patientData = JSON.parse(response.resource);
     }).catch(error => {
       console.error(error);
     });
+  }
+
+  goBack() {
+    this.router.navigate(['/']);
   }
 }

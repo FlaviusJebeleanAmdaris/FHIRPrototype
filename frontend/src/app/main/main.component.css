@@ -2,6 +2,15 @@ table {
     width: 100%;
 }
 
+.spinner {
+    margin: auto;
+    width: 10%;
+}
+
+.filter-input {
+    width: 100%;
+}
+
 .mat-column-id {
     width: 25%;
 }

@@ -1,1 +1,31 @@
-<p>patient works!</p>
+<div class="button">
+    <button mat-raised-button color="primary" (click)="goBack()">Go Back</button>
+</div>
+
+<div class="content">
+    <div>
+        <span class="patient-name">
+            {{ patientData.name[0]?.given[0] }} {{ patientData.name[0]?.family }}
+        </span>
+        <span class="patient-gender">
+            {{ patientData.gender }}
+        </span>
+    </div>
+    
+    <div class="address">
+        {{ patientData.address[0].line[0] }}, {{ patientData.address[0].city }}, {{ patientData.address[0].state }}, {{ patientData.address[0].country }}
+    </div>
+    
+    <div class="birth-date">
+        Birth Date: {{ patientData.birthDate }}
+    </div>
+    
+    <div class="identifiers">
+        Identifiers: 
+        <ul *ngFor="let element of patientData.identifier">
+            <li *ngIf="!!element.type">
+                {{ element.type.text }}: {{ element.value }}
+            </li>
+        </ul>
+    </div>    
+</div>
