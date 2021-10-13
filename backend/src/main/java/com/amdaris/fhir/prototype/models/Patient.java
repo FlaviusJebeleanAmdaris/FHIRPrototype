@@ -66,4 +66,15 @@ public class Patient {
     public void setResource(String resource) {
         this.resource = resource;
     }
+
+    @Override
+    public String toString() {
+        return "Patient{" +
+                "id='" + id + '\'' +
+                ", txid=" + txid +
+                ", timestamp=" + timestamp +
+                ", resourceType='" + resourceType + '\'' +
+                ", resource='" + resource + '\'' +
+                '}';
+    }
 }
