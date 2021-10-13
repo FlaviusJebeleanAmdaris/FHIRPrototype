@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { flushMicrotasks } from '@angular/core/testing';
 import { ActivatedRoute } from '@angular/router';
 import { RequestService } from '../services/request.service';
 
@@ -21,11 +22,11 @@ export class PatientComponent implements OnInit {
     this.id = this.route.snapshot.paramMap.get('id');
 
     this.request.getPatient(this.id!).then(response => {
-      console.log(response);
       this.patient = response;
+      
+      
     }).catch(error => {
       console.error(error);
     });
   }
-
 }
