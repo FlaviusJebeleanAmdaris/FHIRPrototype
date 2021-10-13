@@ -1,0 +1,10 @@
+.header {
+    font-size: 60px;
+    padding: 2%;
+    font-family: monospace;
+    border-bottom: 1px solid gray;
+}
+
+.content {
+    margin: 2% 5%;
+}

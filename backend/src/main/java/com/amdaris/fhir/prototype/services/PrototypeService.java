@@ -19,7 +19,7 @@ public class PrototypeService {
     }
 
     public List<Patient> getPatients() {
-        return prototypeRepository.getAll();
+        return prototypeRepository.findAll();
     }
 
     public Optional<Patient> getPatient(final String id) {
