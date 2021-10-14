@@ -19,4 +19,16 @@ export class RequestService {
   getPatient(id: string): Promise<any> {
     return this.http.get(this.url + `/patient/${id}`).toPromise();
   }
+
+  getObservations(patientId: string): Promise<any> {
+    return this.http.get(this.url + `/observations/${patientId}`).toPromise();
+  }
+
+  getConditions(patientId: string): Promise<any> {
+    return this.http.get(this.url + `/conditions/${patientId}`).toPromise();
+  }
+
+  getEncounters(patientId: string): Promise<any> {
+    return this.http.get(this.url + `/encounters/${patientId}`).toPromise();
+  }
 }

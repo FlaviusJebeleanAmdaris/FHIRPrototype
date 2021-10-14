@@ -2,6 +2,11 @@
     margin-bottom: 50px;
 }
 
+.spinner {
+    margin: auto;
+    width: 10%;
+}
+
 .content {
     padding: 2%;
 }

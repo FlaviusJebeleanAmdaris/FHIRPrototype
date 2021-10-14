@@ -10,7 +10,11 @@ import { RequestService } from '../services/request.service';
 export class PatientComponent implements OnInit {
 
   id: string | null = '';
+  loading: boolean = true;
   patientData: any;
+  observationData: any[] = [];
+  conditionData: any[] = [];
+  encounterData: any[] = [];
 
   constructor(
     private route: ActivatedRoute,
@@ -18,14 +22,29 @@ export class PatientComponent implements OnInit {
     private request: RequestService
   ) { }
 
-  ngOnInit(): void {
+  async ngOnInit() {
+    let response;
     this.id = this.route.snapshot.paramMap.get('id');
 
-    this.request.getPatient(this.id!).then(response => {
-      this.patientData = JSON.parse(response.resource);
-    }).catch(error => {
-      console.error(error);
-    });
+    response = await this.request.getPatient(this.id!).catch(error => console.error(error));
+    this.patientData = JSON.parse(response.resource);
+
+    response = await this.request.getObservations(this.id!).catch(error => console.error(error));
+    for (let element of response) {
+      this.observationData.push(JSON.parse(element.resource));
+    }
+
+    response = await this.request.getConditions(this.id!).catch(error => console.error(error));
+    for (let element of response) {
+      this.conditionData.push(JSON.parse(element.resource));
+    }
+
+    response = await this.request.getEncounters(this.id!).catch(error => console.error(error));
+    for (let element of response) {
+      this.encounterData.push(JSON.parse(element.resource));
+    }
+
+    this.loading = false;
   }
 
   goBack() {
