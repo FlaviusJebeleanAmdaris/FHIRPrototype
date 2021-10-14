@@ -17,12 +17,14 @@ import { PatientComponent } from './patient/patient.component';
 import { RequestService } from './services/request.service';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MainComponent } from './main/main.component';
+import { TableComponent } from './table/table.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     PatientComponent,
-    MainComponent
+    MainComponent,
+    TableComponent
   ],
   imports: [
     BrowserModule,

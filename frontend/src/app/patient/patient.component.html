@@ -16,22 +16,60 @@
                 {{ patientData.gender }}
             </span>
         </div>
-        
-        <div class="address">
-            {{ patientData.address[0].line[0] }}, {{ patientData.address[0].city }}, {{ patientData.address[0].state }}, {{ patientData.address[0].country }}
-        </div>
-        
-        <div class="birth-date">
-            Birth Date: {{ patientData.birthDate }}
-        </div>
-        
-        <div class="identifiers">
-            Identifiers: 
-            <ul *ngFor="let element of patientData.identifier">
-                <li *ngIf="!!element.type">
-                    {{ element.type.text }}: {{ element.value }}
-                </li>
-            </ul>
-        </div>    
+
+        <mat-expansion-panel class="extension-panel">
+            <mat-expansion-panel-header>
+              <mat-panel-title class="extension-panel-title">
+                Personal Data
+              </mat-panel-title>
+            </mat-expansion-panel-header>
+
+            <div class="address">
+                {{ patientData.address[0].line[0] }}, {{ patientData.address[0].city }}, {{ patientData.address[0].state }}, {{ patientData.address[0].country }}
+            </div>
+            
+            <div class="birth-date">
+                Birth Date: {{ patientData.birthDate }}
+            </div>
+            
+            <div class="identifiers">
+                Identifiers: 
+                <ul *ngFor="let element of patientData.identifier">
+                    <li *ngIf="!!element.type">
+                        {{ element.type.text }}: {{ element.value }}
+                    </li>
+                </ul>
+            </div>  
+        </mat-expansion-panel>
+
+        <mat-expansion-panel class="extension-panel">
+            <mat-expansion-panel-header>
+              <mat-panel-title class="extension-panel-title">
+                Observations
+              </mat-panel-title>
+            </mat-expansion-panel-header>
+
+            <app-table [dataSource]="observationsDataSource" [displayColumns]="observationsDisplayedColumns"></app-table>  
+        </mat-expansion-panel>
+
+        <mat-expansion-panel class="extension-panel">
+            <mat-expansion-panel-header>
+              <mat-panel-title class="extension-panel-title">
+                Conditions
+              </mat-panel-title>
+            </mat-expansion-panel-header>
+
+            <app-table [dataSource]="conditionsDataSource" [displayColumns]="conditionsDisplayedColumns"></app-table>
+        </mat-expansion-panel>
+
+        <mat-expansion-panel class="extension-panel">
+            <mat-expansion-panel-header>
+              <mat-panel-title class="extension-panel-title">
+                Encounters
+              </mat-panel-title>
+            </mat-expansion-panel-header>
+
+            <app-table [dataSource]="encountersDataSource" [displayColumns]="encountersDisplayedColumns"></app-table>
+        </mat-expansion-panel>
     </div>
 </div>
