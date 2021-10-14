@@ -15,6 +15,7 @@ import org.springframework.test.web.servlet.MvcResult;
 import org.springframework.test.web.servlet.RequestBuilder;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 
+
 import static org.junit.jupiter.api.Assertions.*;
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -36,7 +37,7 @@ class PrototypeControllerTest {
     private MockMvc mvc;
 
     @Test
-    public void testContextLoads() throws Exception {
+    public void testContextLoads() {
         assertThat(controller).isNotNull();
         assertThat(service).isNotNull();
         assertThat(repository).isNotNull();
@@ -67,5 +68,41 @@ class PrototypeControllerTest {
         // Check 404 Not Found status code returned with no payload
         assertEquals(result.getResponse().getStatus(), 404);
         assertEquals(result.getResponse().getContentAsString(), "");
+    }
+
+    @Test
+    void testGetObservationsInvalidPatient() throws Exception {
+        String patientId = "this-id-doesnt-exist";
+
+        RequestBuilder request = MockMvcRequestBuilders.get("/observations/" + patientId);
+        MvcResult result = mvc.perform(request).andReturn();
+
+        // Check response body returns empty list
+        assertEquals(result.getResponse().getStatus(), 200);
+        assertEquals(result.getResponse().getContentAsString(), "[]");
+    }
+
+    @Test
+    void testGetConditionsInvalidPatient() throws Exception {
+        String patientId = "this-id-doesnt-exist";
+
+        RequestBuilder request = MockMvcRequestBuilders.get("/conditions/" + patientId);
+        MvcResult result = mvc.perform(request).andReturn();
+
+        // Check response body returns empty list
+        assertEquals(result.getResponse().getStatus(), 200);
+        assertEquals(result.getResponse().getContentAsString(), "[]");
+    }
+
+    @Test
+    void testGetEncountersInvalidPatient() throws Exception {
+        String patientId = "this-id-doesnt-exist";
+
+        RequestBuilder request = MockMvcRequestBuilders.get("/encounters/" + patientId);
+        MvcResult result = mvc.perform(request).andReturn();
+
+        // Check response body returns empty list
+        assertEquals(result.getResponse().getStatus(), 200);
+        assertEquals(result.getResponse().getContentAsString(), "[]");
     }
 }

@@ -2,15 +2,15 @@ package com.amdaris.fhir.prototype.models;
 
 import java.util.Date;
 
-public class Patient extends FHIRResource {
+public class Condition extends FHIRResource {
 
-    public Patient(String id, int txid, Date timestamp, String resourceType, String resource) {
+    public Condition(String id, int txid, Date timestamp, String resourceType, String resource) {
         super(id, txid, timestamp, resourceType, resource);
     }
 
     @Override
     public String toString() {
-        return "Patient{" +
+        return "Condition{" +
                 "id='" + this.getId() + '\'' +
                 ", txid=" + this.getTxid() +
                 ", timestamp=" + this.getTimestamp() +

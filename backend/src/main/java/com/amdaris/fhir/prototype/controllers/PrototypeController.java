@@ -1,5 +1,8 @@
 package com.amdaris.fhir.prototype.controllers;
 
+import com.amdaris.fhir.prototype.models.Condition;
+import com.amdaris.fhir.prototype.models.Encounter;
+import com.amdaris.fhir.prototype.models.Observation;
 import com.amdaris.fhir.prototype.models.Patient;
 import com.amdaris.fhir.prototype.services.PrototypeService;
 import org.slf4j.Logger;
@@ -50,5 +53,29 @@ public class PrototypeController {
                     LOGGER.info("No patient found for the id {}", id);
                     return new ResponseEntity<>(HttpStatus.NOT_FOUND);
                 });
+    }
+
+    @GetMapping("/observations/{patientId}")
+    public ResponseEntity<List<Observation>> getObservations(@PathVariable final String patientId) {
+        LOGGER.info("Route /observations called with patientId {}", patientId);
+        List<Observation> observations = prototypeService.getObservationsForPatient(patientId);
+        LOGGER.info("Found {} observations to return", observations.size());
+        return new ResponseEntity<>(observations, HttpStatus.OK);
+    }
+
+    @GetMapping("/conditions/{patientId}")
+    public ResponseEntity<List<Condition>> getConditions(@PathVariable final String patientId) {
+        LOGGER.info("Route /conditions called with patientId {}", patientId);
+        List<Condition> conditions = prototypeService.getConditionsForPatient(patientId);
+        LOGGER.info("Found {} conditions to return", conditions.size());
+        return new ResponseEntity<>(conditions, HttpStatus.OK);
+    }
+
+    @GetMapping("/encounters/{patientId}")
+    public ResponseEntity<List<Encounter>> getEncounters(@PathVariable final String patientId) {
+        LOGGER.info("Route /encounters called with patientId {}", patientId);
+        List<Encounter> encounters = prototypeService.getEncountersForPatient(patientId);
+        LOGGER.info("Found {} encounters to return", encounters.size());
+        return new ResponseEntity<>(encounters, HttpStatus.OK);
     }
 }
