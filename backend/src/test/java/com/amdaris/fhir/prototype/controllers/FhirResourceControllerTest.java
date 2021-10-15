@@ -1,7 +1,7 @@
 package com.amdaris.fhir.prototype.controllers;
 
-import com.amdaris.fhir.prototype.repositories.PrototypeRepository;
-import com.amdaris.fhir.prototype.services.PrototypeService;
+import com.amdaris.fhir.prototype.repositories.FhirResourceRepository;
+import com.amdaris.fhir.prototype.services.FhirResourceService;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.Test;
@@ -22,16 +22,16 @@ import static org.assertj.core.api.Assertions.assertThat;
 @ExtendWith(SpringExtension.class)
 @SpringBootTest
 @AutoConfigureMockMvc
-class PrototypeControllerTest {
+class FhirResourceControllerTest {
 
     @Autowired
-    private PrototypeController controller;
+    private FhirResourceController controller;
 
     @Autowired
-    private PrototypeService service;
+    private FhirResourceService service;
 
     @Autowired
-    private PrototypeRepository repository;
+    private FhirResourceRepository repository;
 
     @Autowired
     private MockMvc mvc;
@@ -48,7 +48,7 @@ class PrototypeControllerTest {
         String patientId = "096724e0-4f46-4af9-8d25-2e5d6ec47526";
         ObjectMapper mapper = new ObjectMapper();
 
-        RequestBuilder request = MockMvcRequestBuilders.get("/patient/" + patientId);
+        RequestBuilder request = MockMvcRequestBuilders.get("/api/patients/" + patientId);
         MvcResult result = mvc.perform(request).andReturn();
 
         JsonNode responseJson = mapper.readTree(result.getResponse().getContentAsString());
@@ -62,12 +62,11 @@ class PrototypeControllerTest {
     void testGetInvalidPatient() throws Exception {
         String patientId = "this-id-doesnt-exist";
 
-        RequestBuilder request = MockMvcRequestBuilders.get("/patient/" + patientId);
+        RequestBuilder request = MockMvcRequestBuilders.get("/api/patient/" + patientId);
         MvcResult result = mvc.perform(request).andReturn();
 
         // Check 404 Not Found status code returned with no payload
         assertEquals(result.getResponse().getStatus(), 404);
-        //extra ccheck
         assertEquals(result.getResponse().getContentAsString(), "");
     }
 
@@ -75,7 +74,7 @@ class PrototypeControllerTest {
     void testGetObservationsInvalidPatient() throws Exception {
         String patientId = "this-id-doesnt-exist";
 
-        RequestBuilder request = MockMvcRequestBuilders.get("/observations/" + patientId);
+        RequestBuilder request = MockMvcRequestBuilders.get("/api/patients/" + patientId + "/observations");
         MvcResult result = mvc.perform(request).andReturn();
 
         // Check response body returns empty list
@@ -87,7 +86,7 @@ class PrototypeControllerTest {
     void testGetConditionsInvalidPatient() throws Exception {
         String patientId = "this-id-doesnt-exist";
 
-        RequestBuilder request = MockMvcRequestBuilders.get("/conditions/" + patientId);
+        RequestBuilder request = MockMvcRequestBuilders.get("/api/patients/" + patientId + "/conditions");
         MvcResult result = mvc.perform(request).andReturn();
 
         // Check response body returns empty list
@@ -99,7 +98,7 @@ class PrototypeControllerTest {
     void testGetEncountersInvalidPatient() throws Exception {
         String patientId = "this-id-doesnt-exist";
 
-        RequestBuilder request = MockMvcRequestBuilders.get("/encounters/" + patientId);
+        RequestBuilder request = MockMvcRequestBuilders.get("/api/patients/" + patientId + "/encounters");
         MvcResult result = mvc.perform(request).andReturn();
 
         // Check response body returns empty list

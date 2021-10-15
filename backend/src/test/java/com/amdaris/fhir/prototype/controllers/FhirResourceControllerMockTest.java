@@ -4,7 +4,7 @@ import com.amdaris.fhir.prototype.models.Condition;
 import com.amdaris.fhir.prototype.models.Encounter;
 import com.amdaris.fhir.prototype.models.Observation;
 import com.amdaris.fhir.prototype.models.Patient;
-import com.amdaris.fhir.prototype.services.PrototypeService;
+import com.amdaris.fhir.prototype.services.FhirResourceService;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -27,20 +27,20 @@ import static org.mockito.Mockito.when;
 @ExtendWith(SpringExtension.class)
 @SpringBootTest
 @AutoConfigureMockMvc
-class PrototypeControllerMockTest {
+class FhirResourceControllerMockTest {
 
     @Autowired
     private MockMvc mvc;
 
     @MockBean
-    private PrototypeService mockService;
+    private FhirResourceService mockService;
 
     @Test
     void testGetPatientsMockServiceEmptyList() throws Exception {
         // Mock service
         when(mockService.getPatients()).thenReturn(new ArrayList<>());
 
-        RequestBuilder request = MockMvcRequestBuilders.get("/patients");
+        RequestBuilder request = MockMvcRequestBuilders.get("/api/patients");
         MvcResult result = mvc.perform(request).andReturn();
 
         // Check response body returns empty list
@@ -61,7 +61,7 @@ class PrototypeControllerMockTest {
         // Mock service
         when(mockService.getPatients()).thenReturn(mockServiceResponse);
 
-        RequestBuilder request = MockMvcRequestBuilders.get("/patients");
+        RequestBuilder request = MockMvcRequestBuilders.get("/api/patients");
         MvcResult result = mvc.perform(request).andReturn();
 
         // Check returned JSON list is equal to the mocked one
@@ -83,7 +83,7 @@ class PrototypeControllerMockTest {
         // Mock service
         when(mockService.getObservationsForPatient(patientId)).thenReturn(mockServiceResponse);
 
-        RequestBuilder request = MockMvcRequestBuilders.get("/observations/" + patientId);
+        RequestBuilder request = MockMvcRequestBuilders.get("/api/patients/" + patientId + "/observations");
         MvcResult result = mvc.perform(request).andReturn();
 
         // Check returned JSON list is equal to the mocked one
@@ -105,7 +105,7 @@ class PrototypeControllerMockTest {
         // Mock service
         when(mockService.getConditionsForPatient(patientId)).thenReturn(mockServiceResponse);
 
-        RequestBuilder request = MockMvcRequestBuilders.get("/conditions/" + patientId);
+        RequestBuilder request = MockMvcRequestBuilders.get("/api/patients/" + patientId + "/conditions");
         MvcResult result = mvc.perform(request).andReturn();
 
         // Check returned JSON list is equal to the mocked one
@@ -127,7 +127,7 @@ class PrototypeControllerMockTest {
         // Mock service
         when(mockService.getEncountersForPatient(patientId)).thenReturn(mockServiceResponse);
 
-        RequestBuilder request = MockMvcRequestBuilders.get("/encounters/" + patientId);
+        RequestBuilder request = MockMvcRequestBuilders.get("/api/patients/" + patientId + "/encounters");
         MvcResult result = mvc.perform(request).andReturn();
 
         // Check returned JSON list is equal to the mocked one

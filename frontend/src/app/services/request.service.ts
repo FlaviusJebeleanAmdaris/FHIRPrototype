@@ -6,7 +6,7 @@ import { Injectable } from '@angular/core';
 })
 export class RequestService {
 
-  url = 'http://localhost:8080';
+  url = 'http://localhost:8080/api';
 
   constructor(
     private http: HttpClient
@@ -17,18 +17,18 @@ export class RequestService {
   }
 
   getPatient(id: string): Promise<any> {
-    return this.http.get(this.url + `/patient/${id}`).toPromise();
+    return this.http.get(this.url + `/patients/${id}`).toPromise();
   }
 
   getObservations(patientId: string): Promise<any> {
-    return this.http.get(this.url + `/observations/${patientId}`).toPromise();
+    return this.http.get(this.url + `/patients/${patientId}/observations`).toPromise();
   }
 
   getConditions(patientId: string): Promise<any> {
-    return this.http.get(this.url + `/conditions/${patientId}`).toPromise();
+    return this.http.get(this.url + `/patients/${patientId}/conditions`).toPromise();
   }
 
   getEncounters(patientId: string): Promise<any> {
-    return this.http.get(this.url + `/encounters/${patientId}`).toPromise();
+    return this.http.get(this.url + `/patients/${patientId}/encounters`).toPromise();
   }
 }

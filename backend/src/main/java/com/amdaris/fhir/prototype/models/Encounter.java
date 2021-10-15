@@ -2,7 +2,7 @@ package com.amdaris.fhir.prototype.models;
 
 import java.util.Date;
 
-public class Encounter extends FHIRResource {
+public class Encounter extends FhirResource {
 
     public Encounter(String id, int txid, Date timestamp, String resourceType, String resource) {
         super(id, txid, timestamp, resourceType, resource);

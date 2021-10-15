@@ -13,7 +13,7 @@ import java.util.List;
 import java.util.Optional;
 
 @Repository
-public interface PrototypeRepository extends CrudRepository<Patient, String> {
+public interface FhirResourceRepository extends CrudRepository<Patient, String> {
 
     // Since the resource column is defined as a JSONB type in the database, we can use "#>> '{}'" to convert it to text
 
@@ -24,7 +24,7 @@ public interface PrototypeRepository extends CrudRepository<Patient, String> {
     List<Patient> findAllPatients();
 
 
-    // Operator -> is used to access JSON element from the JSON column resource
+    // Operator -> is used to access JSON element from the JSONB column resource
 
     @Query("SELECT o.id, o.txid, o.ts, o.resource_type, o.resource #>> '{}' as resource FROM observation o " +
             "WHERE o.resource->'subject'->'id' #>> '{}' = :id")

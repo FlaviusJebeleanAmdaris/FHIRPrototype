@@ -5,7 +5,7 @@ import org.springframework.data.relational.core.mapping.Column;
 
 import java.util.Date;
 
-public abstract class FHIRResource {
+public abstract class FhirResource {
     @Id
     private String id;
 
@@ -19,7 +19,7 @@ public abstract class FHIRResource {
 
     private String resource;
 
-    public FHIRResource(String id, int txid, Date timestamp, String resourceType, String resource) {
+    public FhirResource(String id, int txid, Date timestamp, String resourceType, String resource) {
         this.id = id;
         this.txid = txid;
         this.timestamp = timestamp;

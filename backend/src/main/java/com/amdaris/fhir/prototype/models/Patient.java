@@ -2,7 +2,7 @@ package com.amdaris.fhir.prototype.models;
 
 import java.util.Date;
 
-public class Patient extends FHIRResource {
+public class Patient extends FhirResource {
 
     public Patient(String id, int txid, Date timestamp, String resourceType, String resource) {
         super(id, txid, timestamp, resourceType, resource);
