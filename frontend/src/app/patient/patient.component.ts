@@ -19,7 +19,6 @@ export class PatientComponent {
   loading: boolean = true;
   patientData: any;
 
-  // TODO: extract reusable table component
   observationsDisplayedColumns: string[] = ['category', 'type', 'value', 'status', 'effective'];
   observationsDataSource: MatTableDataSource<TableObservation>;
 
@@ -69,7 +68,6 @@ export class PatientComponent {
     response = await this.request.getConditions(this.id!).catch(error => console.error(error));
     for (let element of response) {
       let jsonElement = JSON.parse(element.resource);
-      console.log(jsonElement);
       conditions.push(new TableCondition(jsonElement.category[0].coding[0].code, jsonElement.code.text, 
         jsonElement.clinicalStatus, jsonElement.onset.dateTime ));
     }

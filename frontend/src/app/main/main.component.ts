@@ -27,11 +27,11 @@ export class MainComponent {
   ) {
     this.requests.getPatients().then(response => {
       for (let patient of response) {
-        this.loading = false;
         const resource = JSON.parse(patient.resource);
         this.patients.push(new TablePatient(patient.id, resource.name[0].given[0], resource.name[0].family, resource.birthDate));
       }
 
+      this.loading = false;
       this.dataSource = new MatTableDataSource(this.patients);
 
       setTimeout(() => this.dataSource.paginator = this.paginator);

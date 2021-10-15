@@ -22,4 +22,14 @@ describe('TableComponent', () => {
   it('should create', () => {
     expect(component).toBeTruthy();
   });
+
+  it('should contain a properly defined table', () => {
+    fixture.detectChanges();
+    fixture.whenStable().then(() => {
+      fixture.detectChanges();
+
+      expect(component.paginator).toBeTruthy();
+      expect(component.sort).toBeTruthy();
+    });
+  });
 });

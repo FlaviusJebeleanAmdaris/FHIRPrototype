@@ -12,12 +12,12 @@ export class TableComponent implements OnInit {
 
   @Input() dataSource: MatTableDataSource<any>;
   @Input() displayColumns: string[];
-  @ViewChild(MatPaginator) observationsPaginator: MatPaginator;
-  @ViewChild(MatSort) observationsSort: MatSort;
+  @ViewChild(MatPaginator) paginator: MatPaginator;
+  @ViewChild(MatSort) sort: MatSort;
 
   constructor() {
-    setTimeout(() => this.dataSource.paginator = this.observationsPaginator);
-    setTimeout(() => this.dataSource.sort = this.observationsSort);
+    setTimeout(() => this.dataSource.paginator = this.paginator);
+    setTimeout(() => this.dataSource.sort = this.sort);
    }
 
   ngOnInit(): void {
