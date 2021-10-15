@@ -24,58 +24,53 @@ public class PrototypeController {
 
     private final static Logger LOGGER = LoggerFactory.getLogger(PrototypeController.class);
 
-    @Autowired
     private final PrototypeService prototypeService;
 
+    @Autowired
     public PrototypeController(PrototypeService prototypeService) {
         this.prototypeService = prototypeService;
     }
 
-    @GetMapping("/patients")
+    @GetMapping("/api/patients")
     public ResponseEntity<List<Patient>> getPatients() {
-        LOGGER.info("Route /patients called");
         List<Patient> patients = prototypeService.getPatients();
-        LOGGER.info("Found {} patients to return", patients.size());
-        return new ResponseEntity<>(patients, HttpStatus.OK);
+        LOGGER.debug("Found {} patients to return", patients.size());
+        return ResponseEntity.ok(patients);
     }
 
-    @GetMapping("/patient/{id}")
+    @GetMapping("/api/patients/{id}")
     public ResponseEntity<Patient> getPatient(@PathVariable final String id) {
-        LOGGER.info("Route /patient called with id {}", id);
         Optional<Patient> optionalPatient = prototypeService.getPatient(id);
 
         return optionalPatient
                 .map(patient -> {
-                    LOGGER.info("Patient data found: {}", patient);
-                    return new ResponseEntity<>(patient, HttpStatus.OK);
+                    LOGGER.debug("Patient data found: {}", patient);
+                    return ResponseEntity.ok(patient);
                 })
                 .orElseGet(() -> {
-                    LOGGER.info("No patient found for the id {}", id);
-                    return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+                    LOGGER.debug("No patient found for the id {}", id);
+                    return ResponseEntity.notFound().build();
                 });
     }
 
-    @GetMapping("/observations/{patientId}")
+    @GetMapping("/api/patients/{patientId}/observations")
     public ResponseEntity<List<Observation>> getObservations(@PathVariable final String patientId) {
-        LOGGER.info("Route /observations called with patientId {}", patientId);
         List<Observation> observations = prototypeService.getObservationsForPatient(patientId);
-        LOGGER.info("Found {} observations to return", observations.size());
-        return new ResponseEntity<>(observations, HttpStatus.OK);
+        LOGGER.debug("Found {} observations to return", observations.size());
+        return ResponseEntity.ok(observations);
     }
 
-    @GetMapping("/conditions/{patientId}")
+    @GetMapping("/api/patients/{patientId}/conditions")
     public ResponseEntity<List<Condition>> getConditions(@PathVariable final String patientId) {
-        LOGGER.info("Route /conditions called with patientId {}", patientId);
         List<Condition> conditions = prototypeService.getConditionsForPatient(patientId);
-        LOGGER.info("Found {} conditions to return", conditions.size());
-        return new ResponseEntity<>(conditions, HttpStatus.OK);
+        LOGGER.debug("Found {} conditions to return", conditions.size());
+        return ResponseEntity.ok(conditions);
     }
 
-    @GetMapping("/encounters/{patientId}")
+    @GetMapping("/api/patients/{patientId}/encounters")
     public ResponseEntity<List<Encounter>> getEncounters(@PathVariable final String patientId) {
-        LOGGER.info("Route /encounters called with patientId {}", patientId);
         List<Encounter> encounters = prototypeService.getEncountersForPatient(patientId);
-        LOGGER.info("Found {} encounters to return", encounters.size());
-        return new ResponseEntity<>(encounters, HttpStatus.OK);
+        LOGGER.debug("Found {} encounters to return", encounters.size());
+        return ResponseEntity.ok(encounters);
     }
 }

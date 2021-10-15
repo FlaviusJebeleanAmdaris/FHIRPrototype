@@ -67,6 +67,7 @@ class PrototypeControllerTest {
 
         // Check 404 Not Found status code returned with no payload
         assertEquals(result.getResponse().getStatus(), 404);
+        //extra ccheck
         assertEquals(result.getResponse().getContentAsString(), "");
     }
 
