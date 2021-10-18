@@ -21,8 +21,6 @@ import java.util.Optional;
 @CrossOrigin(origins = "*")
 public class FhirResourceController {
 
-    private final static Logger LOGGER = LoggerFactory.getLogger(FhirResourceController.class);
-
     private final FhirResourceService fhirResourceService;
 
     @Autowired
@@ -32,44 +30,39 @@ public class FhirResourceController {
 
     @GetMapping("/api/patients")
     public ResponseEntity<List<Patient>> getPatients() {
+
         List<Patient> patients = fhirResourceService.getPatients();
-        LOGGER.debug("Found {} patients to return", patients.size());
         return ResponseEntity.ok(patients);
     }
 
     @GetMapping("/api/patients/{id}")
     public ResponseEntity<Patient> getPatient(@PathVariable final String id) {
+
         Optional<Patient> optionalPatient = fhirResourceService.getPatient(id);
 
         return optionalPatient
-                .map(patient -> {
-                    LOGGER.debug("Patient data found: {}", patient);
-                    return ResponseEntity.ok(patient);
-                })
-                .orElseGet(() -> {
-                    LOGGER.debug("No patient found for the id {}", id);
-                    return ResponseEntity.notFound().build();
-                });
+                .map(ResponseEntity::ok)
+                .orElseGet(() -> ResponseEntity.notFound().build());
     }
 
     @GetMapping("/api/patients/{patientId}/observations")
     public ResponseEntity<List<Observation>> getObservations(@PathVariable final String patientId) {
+
         List<Observation> observations = fhirResourceService.getObservationsForPatient(patientId);
-        LOGGER.debug("Found {} observations to return", observations.size());
         return ResponseEntity.ok(observations);
     }
 
     @GetMapping("/api/patients/{patientId}/conditions")
     public ResponseEntity<List<Condition>> getConditions(@PathVariable final String patientId) {
+
         List<Condition> conditions = fhirResourceService.getConditionsForPatient(patientId);
-        LOGGER.debug("Found {} conditions to return", conditions.size());
         return ResponseEntity.ok(conditions);
     }
 
     @GetMapping("/api/patients/{patientId}/encounters")
     public ResponseEntity<List<Encounter>> getEncounters(@PathVariable final String patientId) {
+
         List<Encounter> encounters = fhirResourceService.getEncountersForPatient(patientId);
-        LOGGER.debug("Found {} encounters to return", encounters.size());
         return ResponseEntity.ok(encounters);
     }
 }
